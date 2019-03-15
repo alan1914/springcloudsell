@@ -1,8 +1,11 @@
 package com.imooc.order.controller;
 
-import com.imooc.order.client.ProductClient;
+
 import com.imooc.order.dataobject.ProductInfo;
 import com.imooc.order.dto.CartDTO;
+import com.imooc.product.client.ProductClient;
+import com.imooc.product.common.DecreaseStockInput;
+import com.imooc.product.common.ProductInfoOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -13,6 +16,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+
+
+/**
+ * 学习用的 feign
+ * 实际用的是 在 product 中定义的 product-client
+ * @author stone
+ */
 
 @RestController
 @RequestMapping("/order")
@@ -53,17 +63,18 @@ public class ClientController {
 
     @GetMapping("/getProductList")
     public String getProductList(){
-        List<ProductInfo> list = productClient.listForOrder(Arrays.asList("157875196366160022", "157875227953464068"));;
+        List<ProductInfoOutput> list = productClient.listForOrder(Arrays.asList("157875196366160022", "157875227953464068"));;
         log.info("response={}",list);
         return "ok";
     }
 
     @GetMapping("/produceDecreaseStock")
     public String produceDecreaseStock(){
-        productClient.decreaseStock(Arrays.asList(new CartDTO("157875196366160022",2)));
+        productClient.decreaseStock(Arrays.asList(new DecreaseStockInput("157875196366160022",2)));
         return "ok";
     }
 
 
 
 }
+
