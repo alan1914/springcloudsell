@@ -4,6 +4,7 @@ import com.imooc.product.VO.ProductInfoVO;
 import com.imooc.product.VO.ProductVO;
 import com.imooc.product.VO.ResultVO;
 import com.imooc.product.common.DecreaseStockInput;
+import com.imooc.product.common.ProductInfoOutput;
 import com.imooc.product.dataobject.ProductCategory;
 import com.imooc.product.dataobject.ProductInfo;
 import com.imooc.product.service.CategoryService;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/com/imooc/product")
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -71,17 +72,18 @@ public class ProductController {
     }
 
     /**
-     * 获取商品列表（给订单服务用的）
+     * 获取商品列表(给订单服务用的)
+     *
      * @param productIdList
      * @return
      */
     @PostMapping("/listForOrder")
-    public List<ProductInfo> listForOrder(@RequestBody List<String> productIdList){
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public List<ProductInfoOutput> listForOrder(@RequestBody List<String> productIdList) {
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return productService.findList(productIdList);
     }
 
